@@ -18,6 +18,7 @@ defmodule RendaFixaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/calculator", CalculatorLive
   end
 
   # Other scopes may use custom stacks.
