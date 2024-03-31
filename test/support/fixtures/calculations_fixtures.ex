@@ -11,7 +11,7 @@ defmodule RendaFixa.CalculationsFixtures do
     {:ok, calculation} =
       attrs
       |> Enum.into(%{
-        due_date: 42,
+        term: 42,
         initial_investment: 120.5,
         monthly_investment: 120.5,
         profitability: 120.5

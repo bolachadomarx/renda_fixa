@@ -1,64 +1,78 @@
-<!-- Comment Form -->
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-  <div class="mx-auto max-w-2xl">
-    <div class="text-center">
-      <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-        Calcule seus investimentos em CDB
-      </h2>
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <!-- Comment Form -->
+    <div>
+      <div class="mx-auto">
+        <div class="text-center">
+          <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
+            Calcule seus investimentos em CDB
+          </h2>
+        </div>
+        <!-- Card -->
+        <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
+          <.calculator_form></.calculator_form>
+        </div>
+        <!-- End Card -->
+      </div>
     </div>
-    <!-- Card -->
-    <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-      <.calculator_form></.calculator_form>
-    </div>
-    <!-- End Card -->
-  </div>
-</div>
-<!-- End Comment Form -->
-
-<!-- Table Comment Form -->
-<div class="flex flex-col">
-  <div class="-m-1.5 overflow-x-auto">
-    <div class="p-1.5 min-w-full inline-block align-middle">
-      <div class="overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+    <!-- End Comment Form -->
+    <div class="flex flex-col">
+      <div class="-m-1.5 overflow-x-auto">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+          <div class="overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Investimento  inicial
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Investimento  mensal
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Vencimento
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Rentabilidade
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id=""
+                phx-update="stream"
+                class="divide-y divide-gray-200 dark:divide-gray-700"
               >
-                Investimento  inicial
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
-              >
-                Investimento  mensal
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
-              >
-                Vencimento
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
-              >
-                Rentabilidade
-              </th>
-            </tr>
-          </thead>
-          <tbody id="" phx-update="stream" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <.table_row
-              :for={{calculaton_id, calculation} <- @streams.calculations}
-              id={calculaton_id}
-              calculation={calculation}
-            >
-            </.table_row>
-          </tbody>
-        </table>
+                <.table_row
+                  :for={{calculaton_id, calculation} <- @streams.calculations}
+                  id={calculaton_id}
+                  calculation={calculation}
+                >
+                </.table_row>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <div>
+    <div>
+      <.stats current_calculation={@current_calculation} calculation_result={@calculation_result}>
+      </.stats>
+    </div>
+  </div>
+  <!-- Table Comment Form -->
 </div>

@@ -8,7 +8,12 @@ defmodule RendaFixa.CalculationsTest do
 
     import RendaFixa.CalculationsFixtures
 
-    @invalid_attrs %{initial_investment: nil, monthly_investment: nil, profitability: nil, due_date: nil}
+    @invalid_attrs %{
+      initial_investment: nil,
+      monthly_investment: nil,
+      profitability: nil,
+      term: nil
+    }
 
     test "list_calculations/0 returns all calculations" do
       calculation = calculation_fixture()
@@ -21,13 +26,18 @@ defmodule RendaFixa.CalculationsTest do
     end
 
     test "create_calculation/1 with valid data creates a calculation" do
-      valid_attrs = %{initial_investment: 120.5, monthly_investment: 120.5, profitability: 120.5, due_date: 42}
+      valid_attrs = %{
+        initial_investment: 120.5,
+        monthly_investment: 120.5,
+        profitability: 120.5,
+        term: 42
+      }
 
       assert {:ok, %Calculation{} = calculation} = Calculations.create_calculation(valid_attrs)
       assert calculation.initial_investment == 120.5
       assert calculation.monthly_investment == 120.5
       assert calculation.profitability == 120.5
-      assert calculation.due_date == 42
+      assert calculation.term == 42
     end
 
     test "create_calculation/1 with invalid data returns error changeset" do
@@ -36,18 +46,29 @@ defmodule RendaFixa.CalculationsTest do
 
     test "update_calculation/2 with valid data updates the calculation" do
       calculation = calculation_fixture()
-      update_attrs = %{initial_investment: 456.7, monthly_investment: 456.7, profitability: 456.7, due_date: 43}
 
-      assert {:ok, %Calculation{} = calculation} = Calculations.update_calculation(calculation, update_attrs)
+      update_attrs = %{
+        initial_investment: 456.7,
+        monthly_investment: 456.7,
+        profitability: 456.7,
+        term: 43
+      }
+
+      assert {:ok, %Calculation{} = calculation} =
+               Calculations.update_calculation(calculation, update_attrs)
+
       assert calculation.initial_investment == 456.7
       assert calculation.monthly_investment == 456.7
       assert calculation.profitability == 456.7
-      assert calculation.due_date == 43
+      assert calculation.term == 43
     end
 
     test "update_calculation/2 with invalid data returns error changeset" do
       calculation = calculation_fixture()
-      assert {:error, %Ecto.Changeset{}} = Calculations.update_calculation(calculation, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Calculations.update_calculation(calculation, @invalid_attrs)
+
       assert calculation == Calculations.get_calculation!(calculation.id)
     end
 

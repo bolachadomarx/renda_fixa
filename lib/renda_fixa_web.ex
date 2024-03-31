@@ -85,6 +85,7 @@ defmodule RendaFixaWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import RendaFixaWeb.CoreComponents
+      import RendaFixaWeb.StatsComponent
       import RendaFixaWeb.Gettext
 
       # Shortcut for generating JS commands

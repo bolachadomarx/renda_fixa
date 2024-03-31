@@ -6,7 +6,10 @@ defmodule RendaFixa.Repo.Migrations.CreateCalculations do
       add :initial_investment, :float
       add :monthly_investment, :float
       add :profitability, :float
-      add :due_date, :integer
+      add :term, :integer
+      add :brute_final_value, :float
+      add :brute_rentability, :float
+      add :interest_rate, :float
 
       timestamps(type: :utc_datetime)
     end

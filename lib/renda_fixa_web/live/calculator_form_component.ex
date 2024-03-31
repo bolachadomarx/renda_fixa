@@ -22,21 +22,21 @@ defmodule RendaFixaWeb.CalculatorFormComponent do
           <label class="block mb-2 text-sm font-medium dark:text-white">
             Investimento inicial
           </label>
-          <.input placeholder="Investimento inicial" field={@form[:initial_investment]} />
+          <.input type="number" placeholder="Investimento inicial" field={@form[:initial_investment]} />
         </div>
 
         <div class="mb-4 sm:mb-8">
           <label class="block mb-2 text-sm font-medium dark:text-white">
             Investimento mensal
           </label>
-          <.input placeholder="Investimento mensal" field={@form[:monthly_investment]} />
+          <.input type="number" placeholder="Investimento mensal" field={@form[:monthly_investment]} />
         </div>
 
         <div class="mb-4 sm:mb-8">
           <label class="block mb-2 text-sm font-medium dark:text-white">
             Vencimento
           </label>
-          <.input placeholder="Vencimento" field={@form[:due_date]} />
+          <.input type="number" placeholder="Vencimento" field={@form[:term]} />
           <select class="py-3 px-4 pe-9 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
             <option selected>Anos</option>
             <option disabled>Meses</option>
@@ -49,6 +49,7 @@ defmodule RendaFixaWeb.CalculatorFormComponent do
             Rentabilidade
           </label>
           <.input
+            type="number"
             class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
             placeholder="Rentabilidade"
             field={@form[:profitability]}
@@ -87,6 +88,8 @@ defmodule RendaFixaWeb.CalculatorFormComponent do
       %Calculation{}
       |> Calculations.change_calculation(calculation_params)
       |> Map.put(:action, :validate)
+
+    send(self(), {:calculation_changed, changeset.changes})
 
     {:noreply, assign(socket, :form, to_form(changeset))}
   end

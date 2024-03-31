@@ -8,6 +8,8 @@ defmodule RendaFixa.Calculations do
 
   alias RendaFixa.Calculations.Calculation
 
+  @di_rate 0.1065
+
   @doc """
   Returns the list of calculations.
 
@@ -101,4 +103,51 @@ defmodule RendaFixa.Calculations do
   def change_calculation(%Calculation{} = calculation, attrs \\ %{}) do
     Calculation.changeset(calculation, attrs)
   end
+
+  def cdb_pre_profitability(%Calculation{
+        initial_investment: initial_investment,
+        profitability: profitability,
+        term: term
+      }) do
+    profitability = profitability(profitability)
+
+    interest_rate = @di_rate * profitability
+
+    rentability = calculate_rentability(initial_investment, interest_rate, term)
+
+    {rentability, interest_rate * 100, rentability - initial_investment}
+  end
+
+  def cdb_pos_profitability(%Calculation{
+        initial_investment: initial_investment,
+        monthly_investment: monthly_investment,
+        profitability: profitability,
+        term: term
+      }) do
+    profitability = profitability(profitability)
+    interest_rate = interest_rate(profitability)
+    months = term_in_months(term)
+
+    brute_initial_interest = initial_investment * interest_rate
+    brute_reinvestment_interest = monthly_investment * interest_rate * months
+
+    brute_rentability = brute_initial_interest + brute_reinvestment_interest
+
+    brute_final_value = initial_investment + monthly_investment * months + brute_rentability
+
+    %{
+      brute_final_value: brute_final_value,
+      brute_rentability: brute_rentability,
+      interest_rate: interest_rate
+    }
+  end
+
+  defp calculate_rentability(initial_investment, interest_rate, term),
+    do: initial_investment * :math.pow(1 + interest_rate, term)
+
+  defp profitability(profitability), do: profitability / 100
+
+  defp interest_rate(profitability), do: @di_rate * profitability
+
+  defp term_in_months(term), do: term * 12
 end
